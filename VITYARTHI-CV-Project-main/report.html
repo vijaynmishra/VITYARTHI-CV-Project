@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VisionCount AI - Project Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --accent: #0284c7;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #cbd5e1;
+      --bg-alt: #f8fafc;
+      --card-bg: #ffffff;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.65;
+      color: var(--text-main);
+      background: #ffffff;
+      padding: 0;
+      margin: 0;
+    }
+
+    .report-container {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 40px 30px;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 50px 45px;
+      background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      margin-bottom: 50px;
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      align-self: flex-start;
+      background: #1e3a8a;
+      color: #ffffff;
+      font-size: 8.5pt;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .cover-main {
+      margin: 40px 0;
+    }
+
+    .cover-title {
+      font-size: 32pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .cover-subtitle {
+      font-size: 15pt;
+      font-weight: 500;
+      color: #0284c7;
+      line-height: 1.4;
+      margin-bottom: 25px;
+    }
+
+    .cover-desc {
+      font-size: 11pt;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #64748b;
+      margin-bottom: 3px;
+    }
+
+    .meta-val {
+      font-size: 9.5pt;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .meta-val a {
+      color: #0284c7;
+      text-decoration: none;
+    }
+
+    /* Headings */
+    h1, h2, h3, h4 {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 18pt;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h1::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: var(--primary-light);
+      border-radius: 2px;
+    }
+
+    h2 {
+      font-size: 13pt;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      color: #1e293b;
+    }
+
+    h3 {
+      font-size: 11pt;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+
+    p {
+      margin-bottom: 12px;
+      text-align: justify;
+    }
+
+    /* Abstract Box */
+    .abstract-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 20px 24px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0 35px 0;
+    }
+
+    .abstract-title {
+      font-size: 12pt;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .keywords {
+      margin-top: 12px;
+      font-size: 9.5pt;
+      color: #334155;
+    }
+
+    .keywords strong {
+      color: #0f172a;
+    }
+
+    /* Table of Contents */
+    .toc-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 30px 0 40px 0;
+    }
+
+    .toc-title {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 24px;
+      font-size: 9pt;
+    }
+
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dotted #e2e8f0;
+      padding: 3px 0;
+    }
+
+    .toc-item a {
+      color: #334155;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .toc-item a:hover {
+      color: var(--primary-light);
+    }
+
+    .toc-num {
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px 0;
+      font-size: 9.5pt;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: #1e293b;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 8pt;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 14px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    /* Code blocks & Diagrams */
+    pre, code {
+      font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-size: 8.5pt;
+      line-height: 1.5;
+      overflow-x: auto;
+      margin: 14px 0 20px 0;
+      border: 1px solid #1e293b;
+    }
+
+    code {
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 9pt;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+
+    /* Figures & Screenshots */
+    .figure-box {
+      margin: 24px 0;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      background: #f8fafc;
+    }
+
+    .figure-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .figure-caption {
+      margin-top: 10px;
+      font-size: 8.5pt;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* Formula Box */
+    .formula-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      padding: 14px 20px;
+      border-radius: 6px;
+      margin: 16px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11pt;
+      color: #14532d;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Architecture / Flow Cards */
+    .workflow-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .workflow-step {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--primary-light);
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 9pt;
+    }
+
+    .workflow-step-num {
+      font-weight: 700;
+      color: var(--primary-light);
+      width: 90px;
+      text-transform: uppercase;
+      font-size: 7.5pt;
+      letter-spacing: 0.5px;
+    }
+
+    .workflow-step-title {
+      font-weight: 600;
+      color: #0f172a;
+      margin-right: 12px;
+      width: 170px;
+    }
+
+    .workflow-step-desc {
+      color: #475569;
+      flex: 1;
+    }
+
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .no-break {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Print Specifics */
+    @media print {
+      body {
+        font-size: 10pt;
+        line-height: 1.55;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .report-container {
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .cover-page {
+        min-height: 95vh;
+        margin-bottom: 0;
+        box-shadow: none;
+      }
+
+      h1 {
+        margin-top: 28px;
+      }
+
+      pre {
+        background: #1e293b !important;
+        color: #f8fafc !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="report-container">
+
+  <!-- COVER PAGE -->
+  <div class="cover-page">
+    <div>
+      <div class="cover-badge">Project Technical Report</div>
+      <div class="cover-main">
+        <h1 class="cover-title" style="border:none; padding:0; margin: 15px 0 10px 0;">VISIONCOUNT AI</h1>
+        <div class="cover-subtitle">Real-Time Hand and Finger Number Identifier Using Client-Side Computer Vision</div>
+        <p class="cover-desc">
+          An interactive, zero-installation web application utilizing WebAssembly, WebGL, and Google MediaPipe Hands to accurately recognize and count numerical gestures (0 to 10) in real-time from webcam video streams.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Domain</span>
+          <span class="meta-val">Computer Vision & Human-Computer Interaction</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Architecture</span>
+          <span class="meta-val">100% Client-Side / Edge AI (Stateless)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Technology Stack</span>
+          <span class="meta-val">HTML5, CSS3, Vanilla JavaScript, MediaPipe</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Repository</span>
+          <span class="meta-val"><a href="https://github.com/9oboDy/VITYARTHI-CV-Project">github.com/9oboDy/VITYARTHI-CV-Project</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABSTRACT -->
+  <div class="abstract-box no-break">
+    <div class="abstract-title">Abstract</div>
+    <p>
+      <strong>VisionCount AI</strong> is a lightweight, browser-based computer vision application designed to recognize and count the number of fingers displayed by a user in real time. The system identifies numbers from <strong>0 to 10</strong> using one or two hands placed in front of a standard webcam. The application uses <strong>Google MediaPipe Hands</strong> for real-time hand landmark detection and employs geometric and vector-based calculations to determine whether individual fingers are extended or folded.
+    </p>
+    <p>
+      Unlike conventional computer vision applications that depend on heavy server-side processing or locally installed machine-learning frameworks, VisionCount AI performs inference entirely within the user's browser. The project follows a <strong>privacy-first, client-side architecture</strong>, ensuring that camera frames do not leave the user's device. HTML5, CSS3, and Vanilla JavaScript construct the application interface and processing pipeline. WebAssembly and WebGL acceleration provided through the MediaPipe ecosystem enable efficient 30–60 FPS real-time processing.
+    </p>
+    <div class="keywords">
+      <strong>Keywords:</strong> Computer Vision, MediaPipe Hands, Hand Gesture Recognition, WebAssembly, WebGL, Human-Computer Interaction, Finger Detection, JavaScript, Edge AI.
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc-card no-break">
+    <div class="toc-title">Table of Contents</div>
+    <div class="toc-grid">
+      <div class="toc-item"><a href="#sec-1">1. Introduction</a><span class="toc-num">01</span></div>
+      <div class="toc-item"><a href="#sec-2">2. Problem Statement</a><span class="toc-num">02</span></div>
+      <div class="toc-item"><a href="#sec-3">3. Objectives</a><span class="toc-num">03</span></div>
+      <div class="toc-item"><a href="#sec-4">4. Scope of the Project</a><span class="toc-num">04</span></div>
+      <div class="toc-item"><a href="#sec-5">5. Target Users</a><span class="toc-num">05</span></div>
+      <div class="toc-item"><a href="#sec-6">6. Technologies Used</a><span class="toc-num">06</span></div>
+      <div class="toc-item"><a href="#sec-7">7. System Architecture</a><span class="toc-num">07</span></div>
+      <div class="toc-item"><a href="#sec-8">8. Working Principle</a><span class="toc-num">08</span></div>
+      <div class="toc-item"><a href="#sec-9">9. MediaPipe Hands</a><span class="toc-num">09</span></div>
+      <div class="toc-item"><a href="#sec-10">10. Finger Classification Algorithm</a><span class="toc-num">10</span></div>
+      <div class="toc-item"><a href="#sec-11">11. Temporal Smoothing</a><span class="toc-num">11</span></div>
+      <div class="toc-item"><a href="#sec-12">12. User Interface</a><span class="toc-num">12</span></div>
+      <div class="toc-item"><a href="#sec-13">13. Audio Feedback</a><span class="toc-num">13</span></div>
+      <div class="toc-item"><a href="#sec-14">14. Camera Management</a><span class="toc-num">14</span></div>
+      <div class="toc-item"><a href="#sec-15">15. Privacy and Security</a><span class="toc-num">15</span></div>
+      <div class="toc-item"><a href="#sec-16">16. Cross-Platform Compatibility</a><span class="toc-num">16</span></div>
+      <div class="toc-item"><a href="#sec-17">17. Project Structure</a><span class="toc-num">17</span></div>
+      <div class="toc-item"><a href="#sec-18">18. Implementation & Deployment</a><span class="toc-num">18</span></div>
+      <div class="toc-item"><a href="#sec-19">19. Advantages</a><span class="toc-num">19</span></div>
+      <div class="toc-item"><a href="#sec-20">20. Limitations</a><span class="toc-num">20</span></div>
+      <div class="toc-item"><a href="#sec-21">21. Applications</a><span class="toc-num">21</span></div>
+      <div class="toc-item"><a href="#sec-22">22. Future Enhancements</a><span class="toc-num">22</span></div>
+      <div class="toc-item"><a href="#sec-23">23. Testing & Validation</a><span class="toc-num">23</span></div>
+      <div class="toc-item"><a href="#sec-24">24. Expected Results</a><span class="toc-num">24</span></div>
+      <div class="toc-item"><a href="#sec-25">25. Conclusion</a><span class="toc-num">25</span></div>
+      <div class="toc-item"><a href="#sec-26">26. References & Summary</a><span class="toc-num">26</span></div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 1 -->
+  <h1 id="sec-1">1. Introduction</h1>
+  <p>
+    Human-Computer Interaction (HCI) traditionally relies on physical input mechanisms such as keyboards, mice, touchscreens, and physical controllers. Although these methods are functional and widely established, scenarios exist where physical touch is inconvenient, unhygienic, or physically impossible.
+  </p>
+  <p>
+    Touchless interaction offers major advantages in healthcare environments, sterile kiosks, educational settings, and accessibility-oriented systems. Hand gestures provide an intuitive and natural modality for human expression, enabling digital control without requiring physical contact.
+  </p>
+  <p>
+    Recent advancements in web standards—specifically <strong>WebAssembly (WASM)</strong> and <strong>WebGL</strong>—now enable high-performance computer vision pipelines directly inside web browsers. <strong>VisionCount AI</strong> leverages these innovations to deliver real-time hand landmark tracking and finger-count recognition (0 to 10) with zero backend setup.
+  </p>
+
+  <!-- SECTION 2 -->
+  <h1 id="sec-2">2. Problem Statement</h1>
+  <p>
+    Existing computer vision systems often suffer from significant friction points that hinder widespread adoption:
+  </p>
+  <ul>
+    <li><strong>Complex Installations:</strong> Heavy dependencies on local Python, PyTorch, CUDA, or C++ environments.</li>
+    <li><strong>High Latency & Cloud Costs:</strong> Server-based video streaming introduces network lag and requires expensive GPU server clusters.</li>
+    <li><strong>Severe Privacy Risks:</strong> Streaming unencrypted camera footage over networks poses critical user privacy issues.</li>
+    <li><strong>High Barrier to Entry:</strong> Everyday users and educators lack an instantaneous, zero-install interface.</li>
+  </ul>
+  <p>
+    VisionCount AI resolves these issues by delivering an entirely browser-based, client-side, privacy-preserving application accessible on any device with a modern browser and camera.
+  </p>
+
+  <!-- SECTION 3 -->
+  <h1 id="sec-3">3. Objectives</h1>
+  <ol>
+    <li>Develop real-time hand gesture recognition via a standard browser webcam feed.</li>
+    <li>Accurately identify numerical counts from <strong>0 to 10</strong> (single hand: 0–5; dual hands: 6–10).</li>
+    <li>Execute 100% of the CV inference client-side using WebAssembly and WebGL.</li>
+    <li>Ensure zero video frames or personal data leave the client device (privacy-by-design).</li>
+    <li>Eliminate detection jitter and false transitions using a temporal rolling-window smoothing filter.</li>
+    <li>Provide an engaging Cyber-Glass Heads-Up Display (HUD) with live joint tracking overlays.</li>
+    <li>Provide responsive audio tone synthesis using the native Web Audio API upon number transitions.</li>
+    <li>Ensure zero-framework, static web hosting compatibility (GitHub Pages, Netlify, Vercel).</li>
+  </ol>
+
+  <!-- SECTION 4 -->
+  <h1 id="sec-4">4. Scope of the Project</h1>
+  <h2>4.1 In-Scope Features</h2>
+  <ul>
+    <li><strong>Client-Side Computer Vision:</strong> Local frame processing at 30–60 FPS.</li>
+    <li><strong>Single-Hand Recognition (0–5):</strong> 0 (fist), 1 (index), 2 (peace sign), 3, 4, 5 (open palm).</li>
+    <li><strong>Dual-Hand Recognition (6–10):</strong> Real-time aggregation of two simultaneous hands.</li>
+    <li><strong>Geometric Classification:</strong> Vector-based distance evaluation invariant to hand tilt and orientation.</li>
+    <li><strong>Temporal Majority Filter:</strong> 5-frame rolling window stabilizing borderline gestures.</li>
+    <li><strong>Camera Controls:</strong> Device selector, horizontal mirror flip, and skeleton visibility toggles.</li>
+  </ul>
+
+  <h2>4.2 Out-of-Scope Features</h2>
+  <ul>
+    <li>Full sign language vocabulary (e.g., ASL/BSL words beyond numerical digits).</li>
+    <li>Dynamic trajectory gestures (e.g., swipe, swipe-to-scroll, continuous air writing).</li>
+    <li>Server-side user authentication, accounts, or persistent cloud databases.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 5 -->
+  <h1 id="sec-5">5. Target Users</h1>
+  <ul>
+    <li><strong>Students and Educators:</strong> Teaching counting and mathematics in early childhood education, and demonstrating computer vision in STEM classrooms without setup overhead.</li>
+    <li><strong>Assistive Tech & Impaired Individuals:</strong> Non-verbal individuals seeking accessible non-contact input to signal numerical selections.</li>
+    <li><strong>Developers & Researchers:</strong> Prototyping browser-based Edge AI and HCI interactions.</li>
+    <li><strong>Smart Kiosk & Sanitary Designers:</strong> Developing touchless controls for public terminals, hospitals, and smart mirrors.</li>
+  </ul>
+
+  <!-- SECTION 6 -->
+  <h1 id="sec-6">6. Technologies Used</h1>
+  <table class="no-break">
+    <thead>
+      <tr>
+        <th style="width: 28%;">Technology</th>
+        <th style="width: 32%;">Role</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>HTML5</strong></td>
+        <td>Structure & Semantic UI</td>
+        <td>Semantic layout, HUD video viewport, dashboard cards, and control panels.</td>
+      </tr>
+      <tr>
+        <td><strong>CSS3</strong></td>
+        <td>Visual Design</td>
+        <td>Dark cyber-glass glassmorphism, flexbox/grid layouts, and micro-animations.</td>
+      </tr>
+      <tr>
+        <td><strong>Vanilla JavaScript</strong></td>
+        <td>Application Logic</td>
+        <td>Pure ES6+ event orchestration, landmark math, and state management.</td>
+      </tr>
+      <tr>
+        <td><strong>MediaPipe Hands</strong></td>
+        <td>Landmark Model</td>
+        <td>Google's ML solution predicting 21 3D hand coordinates per hand in real-time.</td>
+      </tr>
+      <tr>
+        <td><strong>WebAssembly (WASM)</strong></td>
+        <td>High-Speed Execution</td>
+        <td>Compiles neural network inference modules to near-native speed in browser.</td>
+      </tr>
+      <tr>
+        <td><strong>WebGL</strong></td>
+        <td>Hardware Acceleration</td>
+        <td>GPU-accelerated tensor matrix multiplication and canvas skeletal rendering.</td>
+      </tr>
+      <tr>
+        <td><strong>Web Audio API</strong></td>
+        <td>Audio Feedback</td>
+        <td>Synthesizes variable pitch acoustic chimes dynamically without external audio files.</td>
+      </tr>
+      <tr>
+        <td><strong>MediaDevices API</strong></td>
+        <td>Webcam Access</td>
+        <td>Browser standard camera stream negotiation and device selection.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 7 -->
+  <h1 id="sec-7">7. System Architecture</h1>
+  <p>VisionCount AI utilizes a unidirectional pipeline ensuring zero backend dependencies:</p>
+
+  <div class="workflow-container no-break">
+    <div class="workflow-step">
+      <div class="workflow-step-num">Step 01</div>
+      <div class="workflow-step-title">Video Stream Capture</div>
+      <div class="workflow-step-desc">Webcam frames accessed via <code>navigator.mediaDevices.getUserMedia()</code> at 30–60 FPS.</div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-step-num">Step 02</div>
+      <div class="workflow-step-title">MediaPipe Detection</div>
+      <div class="workflow-step-desc">WASM/WebGL pipeline locates hands and outputs 21 normalized coordinates (X, Y, Z) per hand.</div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-step-num">Step 03</div>
+      <div class="workflow-step-title">Geometric Classification</div>
+      <div class="workflow-step-desc">Vector heuristics calculate Euclidean joint distances relative to wrist and MCP base joints.</div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-step-num">Step 04</div>
+      <div class="workflow-step-title">Temporal Filter</div>
+      <div class="workflow-step-desc">Rolling-window majority vote suppresses transient single-frame detection noise.</div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-step-num">Step 05</div>
+      <div class="workflow-step-title">Dual-Hand Aggregation</div>
+      <div class="workflow-step-desc">Summates individual hand counts (0–5) to calculate composite value (0–10).</div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-step-num">Step 06</div>
+      <div class="workflow-step-title">HUD & Audio Render</div>
+      <div class="workflow-step-desc">Canvas draws neon joints, badge triggers pop animation, and Web Audio synthesizes chime.</div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 8 -->
+  <h1 id="sec-8">8. Working Principle</h1>
+  <p>
+    The operational pipeline executes cyclically on every camera frame using <code>requestAnimationFrame</code>. When a hand enters the camera frustum:
+  </p>
+  <ol>
+    <li><strong>Hand Detection & Tracking:</strong> MediaPipe applies a palm detector followed by a precise hand landmark model, returning 21 coordinates per detected hand.</li>
+    <li><strong>Coordinate Normalization:</strong> Normalized viewport coordinates ensure invariance to video resolution.</li>
+    <li><strong>State Evaluation:</strong> Fingers are evaluated against palm landmarks to classify each digit as <code>EXTENDED</code> (1) or <code>FOLDED</code> (0).</li>
+    <li><strong>Temporal Buffering:</strong> Recent classifications are held in a circular buffer of depth $N=5$. The mode value is emitted as the stabilized state.</li>
+  </ol>
+
+  <!-- SCREENSHOTS -->
+  <div class="figure-box no-break">
+    <img src="assets/screenshot1.png" alt="VisionCount AI Dashboard Interface">
+    <div class="figure-caption">Figure 1: VisionCount AI application user interface with dark glassmorphism dashboard, telemetry metrics, and camera control panel.</div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <h1 id="sec-9">9. MediaPipe Hands Landmark Architecture</h1>
+  <p>
+    Each detected hand exposes 21 skeletal landmarks comprising 5 kinematic chains:
+  </p>
+  <pre class="no-break">
+                  Fingertips
+               8     12     16     20
+             (Idx)  (Mid)  (Rng)  (Pnk)
+               |      |      |      |
+             DIP 7  DIP 11 DIP 15 DIP 19
+               |      |      |      |
+             PIP 6  PIP 10 PIP 14 PIP 18
+               |      |      |      |
+             MCP 5  MCP 9  MCP 13 MCP 17
+               \      |      |     /
+             Thumb 4  |      |    /
+                 \    |      |   /
+               MCP 2  |      |  /
+                   \  |      | /
+                   Wrist (Landmark 0)
+  </pre>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 10 -->
+  <h1 id="sec-10">10. Finger Classification Algorithm</h1>
+  <p>
+    Rather than training an opaque neural network for every number configuration, VisionCount AI uses an interpretable geometric classifier based on Euclidean distances between joints:
+  </p>
+  <div class="formula-box no-break">
+    d(p_1, p_2) = &radic; [ (x_2 - x_1)&sup2; + (y_2 - y_1)&sup2; + (z_2 - z_1)&sup2; ]
+  </div>
+  <p>
+    For the four fingers (Index, Middle, Ring, Pinky), a digit is classified as <strong>extended</strong> if the distance from its fingertip (e.g. Landmark 8) to the wrist (Landmark 0) exceeds the distance from its intermediate PIP joint (Landmark 6) to the wrist by a threshold factor:
+  </p>
+  <pre class="no-break">
+// Non-thumb extension test:
+const isExtended = dist(tip, wrist) > dist(pip, wrist) * 1.1;
+
+// Thumb extension test (evaluating separation from pinky MCP base):
+const thumbExtended = dist(thumbTip, pinkyMCP) > dist(thumbIP, pinkyMCP) * 1.15;
+  </pre>
+  <p>
+    This vector formulation guarantees rotation and scale invariance, maintaining accuracy whether the user sits near or far from the webcam.
+  </p>
+
+  <!-- SCREENSHOT 2 -->
+  <div class="figure-box no-break">
+    <img src="assets/screenshot2.png" alt="VisionCount AI Live Hand Skeleton Overlay">
+    <div class="figure-caption">Figure 2: Real-time hand skeletal tracking with neon joint overlay, status badges, and dual-hand numerical calculation.</div>
+  </div>
+
+  <!-- SECTION 11 -->
+  <h1 id="sec-11">11. Temporal Smoothing</h1>
+  <p>
+    Raw predictions between successive video frames can fluctuate due to sensor noise or borderline digit positions. To eliminate UI flicker:
+  </p>
+  <pre class="no-break">
+Raw Frames:    [ 3,  3,  4,  3,  3 ]  ->  Mode Result: 3 (Stabilized)
+Flicker Case:  [ 5,  5,  0,  5,  5 ]  ->  Mode Result: 5 (Outlier Suppressed)
+  </pre>
+  <p>
+    A rolling window of size 5 suppresses single-frame transient anomalies, yielding a smooth, jitter-free user experience.
+  </p>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 12 -->
+  <h1 id="sec-12">12. User Interface Design</h1>
+  <p>
+    The interface implements modern dark-mode glassmorphism with high visual contrast:
+  </p>
+  <ul>
+    <li><strong>Heads-Up Display (HUD):</strong> Overlays 21 glowing joints and skeletal lines directly on the webcam stream with active state coloring (emerald green for extended digits, steel gray for folded digits).</li>
+    <li><strong>Hero Number Indicator:</strong> Prominent digital badge displaying the detected number (0–10) with elastic pop micro-animations on transition.</li>
+    <li><strong>Digit Telemetry Panel:</strong> Real-time breakdown displaying individual finger states (Thumb, Index, Middle, Ring, Pinky) for both left and right hands.</li>
+    <li><strong>Status Bar:</strong> Indicates webcam status, FPS throughput, and audio synthesizer state.</li>
+  </ul>
+
+  <!-- SECTION 13 -->
+  <h1 id="sec-13">13. Audio Feedback System</h1>
+  <p>
+    VisionCount AI integrates the native <strong>Web Audio API</strong> to synthesize pleasant acoustic cues:
+  </p>
+  <ul>
+    <li>When a newly detected stable number is registered, an audio oscillator generates a soft sine-wave chime.</li>
+    <li>Pitch scales harmonically with the number (lower tones for 0–2, ascending up to crystal notes for 8–10).</li>
+    <li>Audio is generated purely through algorithmic synthesis—zero external MP3/WAV assets are required.</li>
+    <li>A dedicated mute toggle is provided in the header for quiet environments.</li>
+  </ul>
+
+  <!-- SECTION 14 -->
+  <h1 id="sec-14">14. Camera Management</h1>
+  <ul>
+    <li><strong>Camera Selector:</strong> Automatically enumerates connected video inputs (built-in webcam, external USB cameras).</li>
+    <li><strong>Horizontal Mirroring:</strong> Toggles video mirroring for natural interaction.</li>
+    <li><strong>Overlay Toggle:</strong> Enables or disables skeletal rendering for low-powered devices.</li>
+  </ul>
+
+  <!-- SECTION 15 -->
+  <h1 id="sec-15">15. Privacy and Security</h1>
+  <p>
+    Privacy is a core architectural pillar of VisionCount AI:
+  </p>
+  <ul>
+    <li><strong>Local Processing:</strong> All video frames remain confined to the client's volatile RAM and GPU buffers.</li>
+    <li><strong>Zero Server Transmission:</strong> No video data, coordinates, or telemetry are transmitted over the internet.</li>
+    <li><strong>No Storage:</strong> No cookies, persistent identifiers, or local video recording.</li>
+  </ul>
+
+  <!-- SECTION 16 -->
+  <h1 id="sec-16">16. Cross-Platform Compatibility</h1>
+  <p>
+    Because VisionCount AI requires no native OS binaries, it runs universally across:
+  </p>
+  <ul>
+    <li><strong>Desktop Browsers:</strong> Google Chrome, Microsoft Edge, Mozilla Firefox, Apple Safari, Brave, Zen Browser.</li>
+    <li><strong>Operating Systems:</strong> Windows 10/11, macOS, Ubuntu/Linux, ChromeOS.</li>
+    <li><strong>Mobile Devices:</strong> Android and iOS devices supporting WebGL and MediaDevices.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 17 -->
+  <h1 id="sec-17">17. Project Structure</h1>
+  <pre class="no-break">
+VITYARTHI-CV-Project/
+├── index.html        # Main semantic markup, HUD tags, dashboard cards
+├── style.css         # Cyber-glass styling, layout, glowing overlays, animations
+├── app.js            # MediaPipe pipeline, geometric classification engine
+├── README.md         # Comprehensive project overview & setup guide
+├── statement.md      # Problem statement & project scope specification
+├── report.md         # Full technical project report (Markdown source)
+├── report.html       # Printable styled technical report
+├── report.pdf        # Compiled publication-ready PDF document
+└── assets/           # Project screenshots & visual assets
+    ├── screenshot1.png
+    └── screenshot2.png
+  </pre>
+
+  <!-- SECTION 18 -->
+  <h1 id="sec-18">18. Implementation & Deployment</h1>
+  <p>
+    Deploying VisionCount AI requires zero server configuration:
+  </p>
+  <pre class="no-break">
+# Clone the repository
+git clone https://github.com/9oboDy/VITYARTHI-CV-Project.git
+
+# Navigate into project directory
+cd VITYARTHI-CV-Project
+
+# Start local server (optional)
+python -m http.server 8080
+# Open http://localhost:8080 in browser
+  </pre>
+  <p>
+    Can be instantly hosted via <strong>GitHub Pages</strong>, <strong>Netlify</strong>, or <strong>Vercel</strong> by connecting the repository.
+  </p>
+
+  <!-- SECTION 19 -->
+  <h1 id="sec-19">19. Advantages</h1>
+  <ol>
+    <li><strong>Zero Server Overhead:</strong> Runs at zero cloud hosting cost.</li>
+    <li><strong>High Privacy:</strong> Camera frames never leave the user device.</li>
+    <li><strong>Low Latency:</strong> 30–60 FPS local processing with instant feedback.</li>
+    <li><strong>Zero Installation:</strong> Users access the system with a single browser link.</li>
+    <li><strong>Educational Simplicity:</strong> Clean, inspectable Vanilla JS codebase.</li>
+  </ol>
+
+  <!-- SECTION 20 -->
+  <h1 id="sec-20">20. Limitations</h1>
+  <ul>
+    <li><strong>Lighting Sensitivity:</strong> Heavy underexposure can degrade landmark confidence.</li>
+    <li><strong>Extreme Occlusion:</strong> Tightly overlapped fingers may occasionally cause misclassification.</li>
+    <li><strong>Hardware Dependency:</strong> Low-end legacy mobile hardware may experience reduced frame rates.</li>
+    <li><strong>Numerical Scope:</strong> Designed specifically for digits 0–10 rather than complex continuous sign language.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 21 -->
+  <h1 id="sec-21">21. Applications</h1>
+  <ul>
+    <li><strong>Early Childhood Education:</strong> Interactive counting games for young learners.</li>
+    <li><strong>Sterile Environments:</strong> Touch-free numerical inputs for medical clinics and food preparation stations.</li>
+    <li><strong>Interactive Kiosks:</strong> Touchless museum and public information navigation.</li>
+    <li><strong>Assistive Tech:</strong> Numerical input for motor-impaired or non-verbal individuals.</li>
+  </ul>
+
+  <!-- SECTION 22 -->
+  <h1 id="sec-22">22. Future Enhancements</h1>
+  <ul>
+    <li><strong>Dynamic Gesture Support:</strong> Recognizing wave, swipe, and rotation motions.</li>
+    <li><strong>Sign Language Vocabulary:</strong> Expanding beyond numerical values to alphabet and words.</li>
+    <li><strong>Speech Synthesis:</strong> Text-to-Speech vocalization of recognized numbers.</li>
+    <li><strong>Offline PWA Support:</strong> Progressive Web App caching for offline functionality.</li>
+  </ul>
+
+  <!-- SECTION 23 -->
+  <h1 id="sec-23">23. Testing & Validation</h1>
+  <table class="no-break">
+    <thead>
+      <tr>
+        <th>Test Gesture</th>
+        <th>Hand Configuration</th>
+        <th>Expected Output</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Closed Fist</td><td>All fingers folded</td><td>0</td><td>Passed</td></tr>
+      <tr><td>Index Raised</td><td>Index extended, others folded</td><td>1</td><td>Passed</td></tr>
+      <tr><td>Victory / Peace</td><td>Index + Middle extended</td><td>2</td><td>Passed</td></tr>
+      <tr><td>Three Fingers</td><td>Index + Middle + Ring extended</td><td>3</td><td>Passed</td></tr>
+      <tr><td>Four Fingers</td><td>Index + Middle + Ring + Pinky extended</td><td>4</td><td>Passed</td></tr>
+      <tr><td>Open Palm</td><td>All 5 digits extended</td><td>5</td><td>Passed</td></tr>
+      <tr><td>Six Fingers</td><td>Open hand (5) + 1 finger</td><td>6</td><td>Passed</td></tr>
+      <tr><td>Seven Fingers</td><td>Open hand (5) + 2 fingers</td><td>7</td><td>Passed</td></tr>
+      <tr><td>Eight Fingers</td><td>Open hand (5) + 3 fingers</td><td>8</td><td>Passed</td></tr>
+      <tr><td>Nine Fingers</td><td>Open hand (5) + 4 fingers</td><td>9</td><td>Passed</td></tr>
+      <tr><td>Both Open Hands</td><td>All 10 digits extended</td><td>10</td><td>Passed</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 24 & 25 -->
+  <h1 id="sec-24">24. Expected Results</h1>
+  <p>
+    The application reliably initializes the user's camera, detects one or both hands, displays real-time skeletal HUD graphics, suppresses noise via temporal smoothing, accurately predicts numbers 0 through 10, and delivers melodic audio confirmation.
+  </p>
+
+  <h1 id="sec-25">25. Conclusion</h1>
+  <p>
+    <strong>VisionCount AI</strong> demonstrates that modern web standards (WebAssembly, WebGL) combined with Google MediaPipe Hands make high-accuracy, real-time computer vision fully viable inside consumer browsers without backend infrastructure. By processing video frames entirely on the client, the project achieves zero latency, zero cloud costs, and complete user privacy.
+  </p>
+
+  <!-- SECTION 26 -->
+  <h1 id="sec-26">26. References & Summary</h1>
+  <ol>
+    <li>Google MediaPipe — Hand Landmark Detection Model Documentation.</li>
+    <li>W3C Web Audio API Specification & Recommendations.</li>
+    <li>W3C Media Capture and Streams (getUserMedia) API Standard.</li>
+    <li>MDN Web Docs — WebGL and Canvas API Reference.</li>
+    <li>VisionCount AI Open-Source Repository: <code>https://github.com/9oboDy/VITYARTHI-CV-Project</code></li>
+  </ol>
+
+</div>
+
+</body>
+</html>
